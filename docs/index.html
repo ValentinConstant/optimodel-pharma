@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Arbres sur données pharmacologiques</title>
+  <meta name="description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Arbres sur données pharmacologiques" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Arbres sur données pharmacologiques" />
+  
+  <meta name="twitter:description" content="Résumé du travail octobre-novembre 2021" />
+  
+
+<meta name="author" content="Valentin Constant" />
+
+
+<meta name="date" content="2021-11-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="feature-engineering.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Arbres sur données pharmacologiques</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1 - Introduction au projet</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#mise-en-contexte"><i class="fa fa-check"></i><b>1.1</b> Mise en contexte</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notre-cas-nos-données"><i class="fa fa-check"></i><b>1.2</b> Notre cas, nos données</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#etapes-dun-projet-de-data-science"><i class="fa fa-check"></i><b>1.3</b> Etapes d’un projet de data-science</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#la-forêt-aléatoire"><i class="fa fa-check"></i><b>2.1</b> La forêt aléatoire</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#sélection-entrainement-et-tuning-du-modèle-permettant-le-feature-engineering"><i class="fa fa-check"></i><b>2.2</b> Sélection, entrainement et tuning du modèle permettant le Feature Engineering</a></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#importance-des-variables"><i class="fa fa-check"></i><b>2.3</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#pfi"><i class="fa fa-check"></i><b>2.3.1</b> PFI</a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#gini"><i class="fa fa-check"></i><b>2.3.2</b> Gini</a></li>
+<li class="chapter" data-level="2.3.3" data-path="feature-engineering.html"><a href="feature-engineering.html#rfe"><i class="fa fa-check"></i><b>2.3.3</b> RFE</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#conclusion-de-la-partie-feature-engineering"><i class="fa fa-check"></i><b>2.4</b> Conclusion de la partie Feature Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html"><i class="fa fa-check"></i><b>3</b> Modèle à 13 variables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#vue-des-données"><i class="fa fa-check"></i><b>3.1</b> Vue des données</a></li>
+<li class="chapter" data-level="3.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#entrainement-test-et-tuning-du-modèle"><i class="fa fa-check"></i><b>3.2</b> Entrainement, test et tuning du modèle</a></li>
+<li class="chapter" data-level="3.3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#matrice-de-confusion"><i class="fa fa-check"></i><b>3.3</b> Matrice de confusion</a></li>
+<li class="chapter" data-level="3.4" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#importance-des-variables-1"><i class="fa fa-check"></i><b>3.4</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#méthode-de-permutation"><i class="fa fa-check"></i><b>3.4.1</b> Méthode de permutation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#lime"><i class="fa fa-check"></i><b>3.4.2</b> LIME</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#ale---effets-des-variables"><i class="fa fa-check"></i><b>3.5</b> ALE - effets des variables</a></li>
+<li class="chapter" data-level="3.6" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#un-arbre-au-lieu-dune-forêt"><i class="fa fa-check"></i><b>3.6</b> Un arbre au lieu d’une forêt ?</a></li>
+<li class="chapter" data-level="3.7" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#bilan"><i class="fa fa-check"></i><b>3.7</b> Bilan</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Arbres sur données pharmacologiques</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Arbres sur données pharmacologiques</h1>
+<p class="author"><em>Valentin Constant</em></p>
+<p class="date"><em>2021-11-16</em></p>
+</div>
+<div id="introduction-au-projet" class="section level1" number="1">
+<h1><span class="header-section-number">Chapitre 1</span> 1 - Introduction au projet</h1>
+<div id="mise-en-contexte" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Mise en contexte</h2>
+<p>L’intelligence artificielle a pour but de rendre une machine capable d’effectuer des tâches a priori réservées aux êtres humains et aux animaux : percevoir, raisonner et agir. Il est possible de l’appréhender de deux manières.</p>
+<p><em>L’approche logique</em></p>
+<p>L’intelligence artificielle classique, telle que développée depuis les années 1950, se construit sur des principes logiques et des systèmes experts. Ces outils reproduisent le raisonnement d’humains experts dans un domaine.</p>
+<p>Pour comprendre son fonctionnement, prenez l’exemple d’un médecin qui pose un diagnostic. L’idée est :</p>
+<p>d’observer les modalités de ses prises de décision. Par exemple, “SI j’observe ceci ET cela, ALORS je conclus que…” ;</p>
+<p>de reproduire ce cheminement de pensée dans un arbre décisionnel ;</p>
+<p>de coder ces règles avec des connecteurs logiques.</p>
+<p>Vous obtenez alors une machine capable de tirer toute seule des conclusions, à partir des informations que vous lui donnez.</p>
+<p>Ce système fonctionne plutôt bien, mais il suppose que la machine ait :</p>
+<p>une bonne mémoire pour stocker toutes les règles codées ;</p>
+<p>une grande puissance de calcul, car le programme est lourd à faire tourner.</p>
+<p>De plus, la collecte des données et leur codage se font à la main, ce qui représente un gros travail.</p>
+<p><em>L’apprentissage machine (machine learning)</em></p>
+<p>Ce courant estime que la logique ne reproduit qu’une facette de l’intelligence humaine. Le cerveau possède en effet d’autres méthodes, comme l’analogie, l’intuition, etc.</p>
+<p>Comme le cerveau s’entraîne et apprend en permanence, le courant neuronal tente de recréer cette capacité d’apprentissage en s’appuyant sur les neurosciences.</p>
+<p>Ces deux courants de recherche coexistent même si, selon les époques, l’un a plus de succès que l’autre. Un des buts de la recherche est de les articuler dans un courant unique.</p>
+<p>Aujourd’hui, la plupart des applications de l’intelligence artificielle sont un mélange des deux, adossé à de l’informatique classique.</p>
+<p>Par exemple, une voiture autonome utilise :</p>
+<p>l’apprentissage machine pour apprendre à détecter et analyser la route ;</p>
+<p>l’approche logique pour prendre des décisions de conduite.</p>
+<p>En résumé, l’intelligence artificielle regroupe plusieurs courants et techniques pour aborder le fonctionnement de l’intelligence. Si le courant logique cherche à reproduire les mécanismes du raisonnement humain, le courant neuronal veut reproduire la faculté d’apprentissage.</p>
+</div>
+<div id="notre-cas-nos-données" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Notre cas, nos données</h2>
+<p>L’approche logique de l’intelligence sera privilégiée. En effet, nous utiliserons l’IA pour raisonner et prendre des décisions.
+Nous disposons de données déjà prêtes. Elles proviennent d’études cliniques réalisées dans le laboratoire, sur la céfépime, la cefotaxime, la cefazoline, la pipéraciline et le méropénem.
+Nous disposons également d’autres variables.</p>
+<p><strong>DSTD</strong> : variable numérique, nombre décimal représentant combien de fois la dose standard a été administrée.</p>
+<p><strong>continu</strong> : variable factorielle, informe du caractère continu de l’administration.</p>
+<p><strong>INT_</strong> : variable factorielle, informe sur la durée de l’intervalle de dose en cas d’admnistration non continue.</p>
+<p><strong>MOTTT_</strong> : variable factorielle, informe sur le motif de traitement du patient.</p>
+<p><strong>Fievre</strong> : variable factorielle, informe sur la présence de fièvre.</p>
+<p><strong>SEXE</strong> : variable factorielle, informe sur le sexe du patient.</p>
+<p><strong>PNAm</strong> : variable numérique, nombre décimal représentant l’âge du patient en mois.</p>
+<p><strong>taille</strong> : variable numérique, nombre décimal représentant la taille du patient en centimètre.</p>
+<p><strong>BW</strong> : variable numérique, poids du patient en kilogrammes mesuré le jour de sa naissance.</p>
+<p><strong>BWt</strong> : variable numérique, poids du patient lors de l’inclusion dans l’étude.</p>
+<p><strong>PATHO_</strong> : variable factorielle, informe sur la présence d’une pathologie sur le patient.</p>
+<p><strong>MOAD_</strong> : variable factorielle, informe sur le motif d’admission du patient.</p>
+<p><strong>EER</strong> : variable factorielle, informe sur l’utilisation de l’épuration extrarénale du patient.</p>
+<p><strong>PELOD2</strong> : variable numérique, score de gravité du patient.</p>
+<p><strong>Dys_</strong> : variable factorielle, informe sur la présence d’un dysfonctionnement sur le patient.</p>
+<p><strong>CRP</strong> : variable numérique, mesure de la protéine C réactive.</p>
+<p><strong>PNN</strong> : variable numérique, mesure de la quantité de polynucléaire neutrophile.</p>
+<p><strong>PQ</strong> : variable numérique, mesure de la quantité de plaquettes sanguines.</p>
+<p><strong>ASAT</strong> : variable numérique, mesure de la quantité d’enzymes hépatiques (aspartate amino transférase)</p>
+<p><strong>ALAT</strong> : variable numérique, mesure de la quantité d’enzymes hépatiques (alanine amino transférase)</p>
+<p><strong>BiliC</strong> : variable numérique, mesure de la quantité de bilirubine conjuguée.</p>
+<p><strong>UreeP</strong> : variable numérique, mesure de l’urée plasmatique.</p>
+<p><strong>CreatP</strong> : variable numérique, mesure de l’urée plasmatique.</p>
+<p><strong>Schwartz</strong> : variable numérique, critère de Schwartz (décrit le débit de filtration glomérulaire)</p>
+<p><strong>CT</strong> : variable factorielle, utilisation d’un cotraitement lors de l’administration.</p>
+<p><strong>Diuretiques</strong> = variable factorielle, utilisation d’un cotraitement lors de l’administration.</p>
+<p><strong>Morphine</strong> = variable factorielle, utilisation d’un cotraitement (morphine) lors de l’administration.</p>
+<p><strong>BZD</strong> = variable factorielle, utilisation d’un cotraitement (benzodiazépines) lors de l’administration.</p>
+<p><strong>Curare</strong> = variable factorielle, utilisation d’un cotraitement au Curare lors de l’administration.</p>
+<p><strong>VasoP</strong> = variable factorielle, utilisation d’un vasopresseurs lors de l’administration.</p>
+<p><strong>Inotrope</strong> = variable factorielle, utilisation d’un cotraitement lors de l’administration.</p>
+<p><strong>Pres_germe</strong> = variable factorielle, informe si le germe a été identifié chez le patient.</p>
+<p><strong>Pres_CMI</strong> = variable factorielle, informe si la CMI du germe a été identifiée chez le patient.</p>
+<p><strong>enterobacteries</strong> = variable factorielle, informe si le germe identifié est de type entérobactérie.</p>
+<p><strong>Haemophilus</strong> = variable factorielle, informe si le germe identifié est de type Haemophilus.</p>
+<p><strong>kingella</strong> = variable factorielle, informe si le germe identifié est de type kingella.</p>
+<p><strong>Moraxella</strong> = variable factorielle, informe si le germe identifié est de type Moraxella.</p>
+<p><strong>Achromo</strong> = variable factorielle, informe si le germe identifié est de type Achromo.</p>
+<p><strong>Neisseria</strong> = variable factorielle, informe si le germe identifié est de type Neisseria.</p>
+<p><strong>Pyo</strong> = variable factorielle, informe si le germe identifié est de type Pyo.</p>
+<p><strong>staph</strong> = variable factorielle, informe si le germe identifié est de type staphylocoque.</p>
+<p><strong>Strepto</strong> = variable factorielle, informe si le germe identifié est de type Streptocoque</p>
+<p><strong>enterocoq</strong> = variable factorielle, informe si le germe identifié est de type enterocoque.</p>
+<p><strong>acineto</strong> = variable factorielle, informe si le germe identifié est de type acinetobacter.</p>
+<p><strong>bulkho</strong> = variable factorielle, informe si le germe identifié est de type bulkho.</p>
+<p><strong>Proba</strong> = variable factorielle, informe si le patient est sous-dosé.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a>skimmed <span class="ot">&lt;-</span> <span class="fu">skim</span>(df)</span></code></pre></div>
+<p>Ce qui fait un total de 597 dosages répartis sur 233 patients.
+17 variables sont numériques et 78 sont factorielles.
+Sans être détaillé ici, ces données ont subis une phase d’encodage (OneHot) et d’imputation (constante pour les variables factorielles, aléatoire pour les variables numériques)</p>
+</div>
+<div id="etapes-dun-projet-de-data-science" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Etapes d’un projet de data-science</h2>
+<p><img src="images/steps.jpg" /><!-- --></p>
+<p>La première étape de <em>Data Engineering</em> consiste a explorer les données, les traiter pour les rendre exploitable, ce qui a été évoqué au paragraphe précédent.</p>
+<p>Ensuite, nous étudirons les prédicteurs, ici appelées features. Ce sont les variables permettant de prédire. Cette étape fait l’objet du chapitre suivant, intitulé Featuging Engineering, en français Ingénierie des prédicteurs, ou ingénierie des variables.</p>
+<p>Dans la partie <em>Modélisation</em>, nous avons 4 étapes majeures : la sélection du modèle, son entrainement, son évaluation et en dernier son optimisation.
+Cette étape fera l’objet du chapitre “Modeling.”</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="feature-engineering.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

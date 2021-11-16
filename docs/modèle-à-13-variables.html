@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 3 Modèle à 13 variables | Arbres sur données pharmacologiques</title>
+  <meta name="description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 3 Modèle à 13 variables | Arbres sur données pharmacologiques" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 3 Modèle à 13 variables | Arbres sur données pharmacologiques" />
+  
+  <meta name="twitter:description" content="Résumé du travail octobre-novembre 2021" />
+  
+
+<meta name="author" content="Valentin Constant" />
+
+
+<meta name="date" content="2021-11-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="feature-engineering.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Arbres sur données pharmacologiques</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1 - Introduction au projet</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#mise-en-contexte"><i class="fa fa-check"></i><b>1.1</b> Mise en contexte</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notre-cas-nos-données"><i class="fa fa-check"></i><b>1.2</b> Notre cas, nos données</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#etapes-dun-projet-de-data-science"><i class="fa fa-check"></i><b>1.3</b> Etapes d’un projet de data-science</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#la-forêt-aléatoire"><i class="fa fa-check"></i><b>2.1</b> La forêt aléatoire</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#sélection-entrainement-et-tuning-du-modèle-permettant-le-feature-engineering"><i class="fa fa-check"></i><b>2.2</b> Sélection, entrainement et tuning du modèle permettant le Feature Engineering</a></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#importance-des-variables"><i class="fa fa-check"></i><b>2.3</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#pfi"><i class="fa fa-check"></i><b>2.3.1</b> PFI</a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#gini"><i class="fa fa-check"></i><b>2.3.2</b> Gini</a></li>
+<li class="chapter" data-level="2.3.3" data-path="feature-engineering.html"><a href="feature-engineering.html#rfe"><i class="fa fa-check"></i><b>2.3.3</b> RFE</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#conclusion-de-la-partie-feature-engineering"><i class="fa fa-check"></i><b>2.4</b> Conclusion de la partie Feature Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html"><i class="fa fa-check"></i><b>3</b> Modèle à 13 variables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#vue-des-données"><i class="fa fa-check"></i><b>3.1</b> Vue des données</a></li>
+<li class="chapter" data-level="3.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#entrainement-test-et-tuning-du-modèle"><i class="fa fa-check"></i><b>3.2</b> Entrainement, test et tuning du modèle</a></li>
+<li class="chapter" data-level="3.3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#matrice-de-confusion"><i class="fa fa-check"></i><b>3.3</b> Matrice de confusion</a></li>
+<li class="chapter" data-level="3.4" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#importance-des-variables-1"><i class="fa fa-check"></i><b>3.4</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#méthode-de-permutation"><i class="fa fa-check"></i><b>3.4.1</b> Méthode de permutation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#lime"><i class="fa fa-check"></i><b>3.4.2</b> LIME</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#ale---effets-des-variables"><i class="fa fa-check"></i><b>3.5</b> ALE - effets des variables</a></li>
+<li class="chapter" data-level="3.6" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#un-arbre-au-lieu-dune-forêt"><i class="fa fa-check"></i><b>3.6</b> Un arbre au lieu d’une forêt ?</a></li>
+<li class="chapter" data-level="3.7" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#bilan"><i class="fa fa-check"></i><b>3.7</b> Bilan</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Arbres sur données pharmacologiques</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="modèle-à-13-variables" class="section level1" number="3">
+<h1><span class="header-section-number">Chapitre 3</span> Modèle à 13 variables</h1>
+<pre><code>## 
+## Attachement du package : &#39;readr&#39;</code></pre>
+<pre><code>## L&#39;objet suivant est masqué depuis &#39;package:scales&#39;:
+## 
+##     col_factor</code></pre>
+<pre><code>## Les objets suivants sont masqués depuis &#39;package:vroom&#39;:
+## 
+##     as.col_spec, col_character, col_date, col_datetime, col_double,
+##     col_factor, col_guess, col_integer, col_logical, col_number,
+##     col_skip, col_time, cols, cols_condense, cols_only, date_names,
+##     date_names_lang, date_names_langs, default_locale, fwf_cols,
+##     fwf_empty, fwf_positions, fwf_widths, locale, output_column,
+##     problems, spec</code></pre>
+<div id="vue-des-données" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Vue des données</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="modèle-à-13-variables.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb26-2"><a href="modèle-à-13-variables.html#cb26-2" aria-hidden="true" tabindex="-1"></a>skimmed_ts <span class="ot">&lt;-</span> <span class="fu">skim</span>(df_third_selection)</span>
+<span id="cb26-3"><a href="modèle-à-13-variables.html#cb26-3" aria-hidden="true" tabindex="-1"></a>skimmed_ts</span></code></pre></div>
+<p>Les prédicteurs catégoriels retenus sont :</p>
+<ul>
+<li><p><strong>cefepime</strong>, informant sur l’utilisation de la cefepime.</p></li>
+<li><p><strong>piperaciline</strong>, informant sur l’utilisation de la piperaciline.</p></li>
+<li><p><strong>continu</strong>, informant sur le caractère continu de l’administration.</p></li>
+<li><p><strong>INT_6H</strong>, informant sur le choix d’un intervalle de dose de 6H en cas d’administration non continue.</p></li>
+<li><p><strong>Pres_germe</strong>, informant sur l’identification du germe.</p></li>
+<li><p><strong>enterobacteries</strong>, informant sur le type de germe (enterobacteries) en cas d’identification.</p></li>
+<li><p><strong>Pyo</strong>, informant sur le type de germe (Pyo) en cas d’identification.</p></li>
+</ul>
+<p>Les prédicteurs quantitatifs sont :</p>
+<ul>
+<li><p><strong>DSTD</strong>, informant sur la quantité de dose administrée (nombre de fois la dose standard)</p></li>
+<li><p><strong>PNAm</strong>, âge du patient en mois.</p></li>
+<li><p><strong>taille</strong>, taille du patient.</p></li>
+<li><p><strong>BW</strong>, poids du patient à la naissance.</p></li>
+<li><p><strong>BWt</strong>, poids du patient lors de l’inclusion dans l’étude.</p></li>
+<li><p><strong>Schwartz</strong>, indice de Schwartz, reflet de la fonction rénale.</p></li>
+</ul>
+</div>
+<div id="entrainement-test-et-tuning-du-modèle" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Entrainement, test et tuning du modèle</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="modèle-à-13-variables.html#cb27-1" aria-hidden="true" tabindex="-1"></a>smp_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">nrow</span>(df_third_selection))</span>
+<span id="cb27-2"><a href="modèle-à-13-variables.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb27-3"><a href="modèle-à-13-variables.html#cb27-3" aria-hidden="true" tabindex="-1"></a>train_ind_df_third_selection <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(df_third_selection)), <span class="at">size =</span> smp_size)</span>
+<span id="cb27-4"><a href="modèle-à-13-variables.html#cb27-4" aria-hidden="true" tabindex="-1"></a>train_df_third_selection <span class="ot">&lt;-</span> df_third_selection[train_ind_df_third_selection, ]</span>
+<span id="cb27-5"><a href="modèle-à-13-variables.html#cb27-5" aria-hidden="true" tabindex="-1"></a>test_df_third_selection <span class="ot">&lt;-</span> df_third_selection[<span class="sc">-</span>train_ind_df_third_selection, ]</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="modèle-à-13-variables.html#cb28-1" aria-hidden="true" tabindex="-1"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">mtry =</span> <span class="fu">seq</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb28-2"><a href="modèle-à-13-variables.html#cb28-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">splitrule =</span> <span class="fu">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),</span>
+<span id="cb28-3"><a href="modèle-à-13-variables.html#cb28-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">min.node.size =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb28-4"><a href="modèle-à-13-variables.html#cb28-4" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb28-5"><a href="modèle-à-13-variables.html#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="modèle-à-13-variables.html#cb28-6" aria-hidden="true" tabindex="-1"></a>group_fit_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="modèle-à-13-variables.html#cb29-1" aria-hidden="true" tabindex="-1"></a>model_rf_third_selec <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(Proba <span class="sc">~</span> ., <span class="at">data =</span> train_df_third_selection,<span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>, <span class="co">#random forest</span></span>
+<span id="cb29-2"><a href="modèle-à-13-variables.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">trControl =</span> group_fit_control, <span class="at">tuneGrid =</span> rf_grid,<span class="at">importance=</span><span class="st">&quot;impurity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="modèle-à-13-variables.html#cb30-1" aria-hidden="true" tabindex="-1"></a>model_rf_third_selec<span class="sc">$</span>bestTune</span></code></pre></div>
+<pre><code>##    mtry  splitrule min.node.size
+## 23    4 extratrees             3</code></pre>
+</div>
+<div id="matrice-de-confusion" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Matrice de confusion</h2>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="modèle-à-13-variables.html#cb32-1" aria-hidden="true" tabindex="-1"></a>test_third_selection <span class="ot">&lt;-</span> test_df_third_selection[<span class="fu">which</span>(<span class="fu">names</span>(test_df_third_selection) <span class="sc">!=</span> <span class="st">&quot;Proba&quot;</span>)]</span>
+<span id="cb32-2"><a href="modèle-à-13-variables.html#cb32-2" aria-hidden="true" tabindex="-1"></a>predicted_third_selection <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf_third_selec, test_third_selection)</span>
+<span id="cb32-3"><a href="modèle-à-13-variables.html#cb32-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(test_df_third_selection<span class="sc">$</span>Proba, predicted_third_selection)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  1  0
+##          1 66 11
+##          0  5 68
+##                                           
+##                Accuracy : 0.8933          
+##                  95% CI : (0.8326, 0.9378)
+##     No Information Rate : 0.5267          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.787           
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.2113          
+##                                           
+##             Sensitivity : 0.9296          
+##             Specificity : 0.8608          
+##          Pos Pred Value : 0.8571          
+##          Neg Pred Value : 0.9315          
+##              Prevalence : 0.4733          
+##          Detection Rate : 0.4400          
+##    Detection Prevalence : 0.5133          
+##       Balanced Accuracy : 0.8952          
+##                                           
+##        &#39;Positive&#39; Class : 1               
+## </code></pre>
+</div>
+<div id="importance-des-variables-1" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Importance des variables</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="modèle-à-13-variables.html#cb34-1" aria-hidden="true" tabindex="-1"></a>X_third_selection <span class="ot">&lt;-</span> df_third_selection[<span class="fu">which</span>(<span class="fu">names</span>(df_third_selection) <span class="sc">!=</span> <span class="st">&quot;Proba&quot;</span>)]</span>
+<span id="cb34-2"><a href="modèle-à-13-variables.html#cb34-2" aria-hidden="true" tabindex="-1"></a>predictor_third_selection <span class="ot">&lt;-</span> Predictor<span class="sc">$</span><span class="fu">new</span>(model_rf_third_selec, <span class="at">data =</span> X_third_selection, <span class="at">y =</span> df_third_selection<span class="sc">$</span>Proba)</span></code></pre></div>
+<div id="méthode-de-permutation" class="section level3" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Méthode de permutation</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="modèle-à-13-variables.html#cb35-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">loss =</span> <span class="st">&quot;ce&quot;</span>, <span class="at">compare =</span> <span class="st">&quot;difference&quot;</span>, <span class="at">n.repetitions =</span> <span class="dv">5</span>)</span>
+<span id="cb35-2"><a href="modèle-à-13-variables.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(imp)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/pfi-opt-rf-1.png" width="672" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="modèle-à-13-variables.html#cb36-1" aria-hidden="true" tabindex="-1"></a>importance_gini_opt_rf <span class="ot">&lt;-</span> <span class="fu">varImp</span>(model_rf_third_selec)</span>
+<span id="cb36-2"><a href="modèle-à-13-variables.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(importance_gini_opt_rf)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/gini-opt-rf-1.png" width="672" /></p>
+</div>
+<div id="lime" class="section level3" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> LIME</h3>
+<p>(Non compilé, utilisé pour déterminer les effets des variables sur une instance précise)</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="modèle-à-13-variables.html#cb37-1" aria-hidden="true" tabindex="-1"></a>model_randomforest <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(Proba <span class="sc">~</span> ., <span class="at">data =</span> train_df_third_selection,<span class="at">method =</span> <span class="st">&quot;rf&quot;</span>, <span class="co">#random forest</span></span>
+<span id="cb37-2"><a href="modèle-à-13-variables.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="at">trControl =</span> group_fit_control)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="modèle-à-13-variables.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#LIME</span></span>
+<span id="cb38-2"><a href="modèle-à-13-variables.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;lime&quot;</span>)</span>
+<span id="cb38-3"><a href="modèle-à-13-variables.html#cb38-3" aria-hidden="true" tabindex="-1"></a>explainer_2 <span class="ot">&lt;-</span> <span class="fu">lime</span>(train_df_third_selection, model_randomforest)<span class="co">#lime</span></span>
+<span id="cb38-4"><a href="modèle-à-13-variables.html#cb38-4" aria-hidden="true" tabindex="-1"></a>explanation_2 <span class="ot">&lt;-</span> lime<span class="sc">::</span><span class="fu">explain</span>(test_df_third_selection[<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>], explainer_2, <span class="at">n_labels =</span> <span class="dv">1</span>, <span class="at">n_features =</span> <span class="dv">13</span>)</span>
+<span id="cb38-5"><a href="modèle-à-13-variables.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_explanations</span>(explanation_2)</span>
+<span id="cb38-6"><a href="modèle-à-13-variables.html#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_features</span>(explanation_2)</span>
+<span id="cb38-7"><a href="modèle-à-13-variables.html#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="modèle-à-13-variables.html#cb38-8" aria-hidden="true" tabindex="-1"></a>lime.rf  <span class="ot">&lt;-</span> LocalModel<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">k =</span> <span class="dv">12</span>, <span class="at">x.interest =</span>  X_third_selection[<span class="dv">1</span>,])</span>
+<span id="cb38-9"><a href="modèle-à-13-variables.html#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lime.rf)</span>
+<span id="cb38-10"><a href="modèle-à-13-variables.html#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="modèle-à-13-variables.html#cb38-11" aria-hidden="true" tabindex="-1"></a>shapley.rf <span class="ot">&lt;-</span> Shapley<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">x.interest =</span> X_third_selection[<span class="dv">1</span>,])</span>
+<span id="cb38-12"><a href="modèle-à-13-variables.html#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shapley.rf)</span>
+<span id="cb38-13"><a href="modèle-à-13-variables.html#cb38-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-14"><a href="modèle-à-13-variables.html#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model_randomforest, test_df_third_selection[<span class="dv">1</span>, ])</span>
+<span id="cb38-15"><a href="modèle-à-13-variables.html#cb38-15" aria-hidden="true" tabindex="-1"></a>test_df_third_selection[<span class="dv">1</span>,<span class="dv">14</span>]</span></code></pre></div>
+</div>
+</div>
+<div id="ale---effets-des-variables" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> ALE - effets des variables</h2>
+<p>(Non compilé, utilisé pour déterminer les effets des variables sur des intervalles de valeurs)</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="modèle-à-13-variables.html#cb39-1" aria-hidden="true" tabindex="-1"></a>ale_entero <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;enterobacteries&quot;</span>)</span>
+<span id="cb39-2"><a href="modèle-à-13-variables.html#cb39-2" aria-hidden="true" tabindex="-1"></a>ale_entero<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb39-3"><a href="modèle-à-13-variables.html#cb39-3" aria-hidden="true" tabindex="-1"></a>ale_pyo <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;Pyo&quot;</span>)</span>
+<span id="cb39-4"><a href="modèle-à-13-variables.html#cb39-4" aria-hidden="true" tabindex="-1"></a>ale_pyo<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb39-5"><a href="modèle-à-13-variables.html#cb39-5" aria-hidden="true" tabindex="-1"></a>ale_continu <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;continu&quot;</span>)</span>
+<span id="cb39-6"><a href="modèle-à-13-variables.html#cb39-6" aria-hidden="true" tabindex="-1"></a>ale_continu<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb39-7"><a href="modèle-à-13-variables.html#cb39-7" aria-hidden="true" tabindex="-1"></a>ale_INT_6H <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;INT_6H&quot;</span>)</span>
+<span id="cb39-8"><a href="modèle-à-13-variables.html#cb39-8" aria-hidden="true" tabindex="-1"></a>ale_INT_6H<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb39-9"><a href="modèle-à-13-variables.html#cb39-9" aria-hidden="true" tabindex="-1"></a>ale_cefe <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;cefe&quot;</span>, <span class="at">grid.size =</span> <span class="dv">5</span>)</span>
+<span id="cb39-10"><a href="modèle-à-13-variables.html#cb39-10" aria-hidden="true" tabindex="-1"></a>ale_cefe<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb39-11"><a href="modèle-à-13-variables.html#cb39-11" aria-hidden="true" tabindex="-1"></a>ale_pipe <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="st">&quot;pipe&quot;</span>, <span class="at">grid.size =</span> <span class="dv">5</span>)</span>
+<span id="cb39-12"><a href="modèle-à-13-variables.html#cb39-12" aria-hidden="true" tabindex="-1"></a>ale_pipe<span class="sc">$</span><span class="fu">plot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="modèle-à-13-variables.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># FeatureEffect plots support up to two features:</span></span>
+<span id="cb40-2"><a href="modèle-à-13-variables.html#cb40-2" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;taille&quot;</span>, <span class="st">&quot;PNAm&quot;</span>))</span>
+<span id="cb40-3"><a href="modèle-à-13-variables.html#cb40-3" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-4"><a href="modèle-à-13-variables.html#cb40-4" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;taille&quot;</span>, <span class="st">&quot;BWt&quot;</span>))</span>
+<span id="cb40-5"><a href="modèle-à-13-variables.html#cb40-5" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-6"><a href="modèle-à-13-variables.html#cb40-6" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;PNAm&quot;</span>, <span class="st">&quot;BWt&quot;</span>))</span>
+<span id="cb40-7"><a href="modèle-à-13-variables.html#cb40-7" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-8"><a href="modèle-à-13-variables.html#cb40-8" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;BWt&quot;</span>, <span class="st">&quot;DSTD&quot;</span>))</span>
+<span id="cb40-9"><a href="modèle-à-13-variables.html#cb40-9" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-10"><a href="modèle-à-13-variables.html#cb40-10" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;taille&quot;</span>, <span class="st">&quot;DSTD&quot;</span>))</span>
+<span id="cb40-11"><a href="modèle-à-13-variables.html#cb40-11" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb40-12"><a href="modèle-à-13-variables.html#cb40-12" aria-hidden="true" tabindex="-1"></a>eff <span class="ot">&lt;-</span> FeatureEffect<span class="sc">$</span><span class="fu">new</span>(predictor_third_selection, <span class="at">feature =</span> <span class="fu">c</span>(<span class="st">&quot;PNAm&quot;</span>, <span class="st">&quot;DSTD&quot;</span>))</span>
+<span id="cb40-13"><a href="modèle-à-13-variables.html#cb40-13" aria-hidden="true" tabindex="-1"></a>eff<span class="sc">$</span><span class="fu">plot</span>(<span class="at">show.data =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="un-arbre-au-lieu-dune-forêt" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Un arbre au lieu d’une forêt ?</h2>
+<p>Historiquement, l’arbre de décision était utilisé bien avant les forêts aléatoires.</p>
+<p>Voyons ce que donnerait un arbre de décision sur nos données.</p>
+<p><img src="images/tree.jpg" /><!-- --></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="modèle-à-13-variables.html#cb41-1" aria-hidden="true" tabindex="-1"></a>tree_third <span class="ot">&lt;-</span> <span class="fu">rpart</span>(Proba <span class="sc">~</span> ., <span class="at">data=</span>train_df_third_selection)</span>
+<span id="cb41-2"><a href="modèle-à-13-variables.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(tree_third)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/tree-opt-1.png" width="672" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="modèle-à-13-variables.html#cb42-1" aria-hidden="true" tabindex="-1"></a>tree_third</span></code></pre></div>
+<pre><code>## n= 447 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##   1) root 447 206 1 (0.53914989 0.46085011)  
+##     2) Pres_germe=0 199  40 1 (0.79899497 0.20100503)  
+##       4) DSTD&lt; 1.895 184  25 1 (0.86413043 0.13586957) *
+##       5) DSTD&gt;=1.895 15   0 0 (0.00000000 1.00000000) *
+##     3) Pres_germe=1 248  82 0 (0.33064516 0.66935484)  
+##       6) Pyo=1 33   2 1 (0.93939394 0.06060606) *
+##       7) Pyo=0 215  51 0 (0.23720930 0.76279070)  
+##        14) BWt&gt;=44.5 12   2 1 (0.83333333 0.16666667) *
+##        15) BWt&lt; 44.5 203  41 0 (0.20197044 0.79802956)  
+##          30) continu=0 151  41 0 (0.27152318 0.72847682)  
+##            60) Schwartz&gt;=126.034 83  33 0 (0.39759036 0.60240964)  
+##             120) cefe=0.0 45  21 1 (0.53333333 0.46666667)  
+##               240) enterobacteries=1 21   4 1 (0.80952381 0.19047619) *
+##               241) enterobacteries=0 24   7 0 (0.29166667 0.70833333) *
+##             121) cefe=1.0 38   9 0 (0.23684211 0.76315789) *
+##            61) Schwartz&lt; 126.034 68   8 0 (0.11764706 0.88235294) *
+##          31) continu=1 52   0 0 (0.00000000 1.00000000) *</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="modèle-à-13-variables.html#cb44-1" aria-hidden="true" tabindex="-1"></a>test_df_third_selection_x <span class="ot">&lt;-</span> test_df_third_selection[<span class="fu">which</span>(<span class="fu">names</span>(test_df_third_selection) <span class="sc">!=</span> <span class="st">&quot;Proba&quot;</span>)]</span>
+<span id="cb44-2"><a href="modèle-à-13-variables.html#cb44-2" aria-hidden="true" tabindex="-1"></a>predicted_third_selection <span class="ot">&lt;-</span> <span class="fu">predict</span>(tree_third, test_df_third_selection_x)</span>
+<span id="cb44-3"><a href="modèle-à-13-variables.html#cb44-3" aria-hidden="true" tabindex="-1"></a>predicted_third_selection <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(predicted_third_selection[,<span class="dv">1</span>] <span class="sc">&lt;</span> .<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb44-4"><a href="modèle-à-13-variables.html#cb44-4" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(<span class="at">reference =</span> test_df_third_selection<span class="sc">$</span>Proba, <span class="at">data =</span> predicted_third_selection, <span class="at">positive =</span> <span class="st">&quot;1&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning in confusionMatrix.default(reference = test_df_third_selection$Proba, :
+## Levels are not in the same order for reference and data. Refactoring data to
+## match.</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  1  0
+##          1 62 16
+##          0 15 57
+##                                           
+##                Accuracy : 0.7933          
+##                  95% CI : (0.7197, 0.8551)
+##     No Information Rate : 0.5133          
+##     P-Value [Acc &gt; NIR] : 1.184e-12       
+##                                           
+##                   Kappa : 0.5862          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 1               
+##                                           
+##             Sensitivity : 0.8052          
+##             Specificity : 0.7808          
+##          Pos Pred Value : 0.7949          
+##          Neg Pred Value : 0.7917          
+##              Prevalence : 0.5133          
+##          Detection Rate : 0.4133          
+##    Detection Prevalence : 0.5200          
+##       Balanced Accuracy : 0.7930          
+##                                           
+##        &#39;Positive&#39; Class : 1               
+## </code></pre>
+</div>
+<div id="bilan" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Bilan</h2>
+<p>La forêt entière, à 94 variables, a **91<em>%</em> de précision.</p>
+<p>La forêt optimisée, réduite à 13 variables, a <strong>86,6%</strong>.</p>
+<p>L’arbre seul, à 13 variable, a <strong>79,3%</strong>.</p>
+<p>Ce projet a permis d’identifié les variables les plus importantes pour optimiser le modèle, en vue de son utilisation.</p>
+<p>Pour utiliser ses modèles en ligne, il faut faire appel aux compétences d’un data engineer.</p>
+<p><img src="images/skills.jpg" /><!-- --></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="feature-engineering.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-modeling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

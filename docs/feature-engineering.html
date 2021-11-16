@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapitre 2 Feature engineering | Arbres sur données pharmacologiques</title>
+  <meta name="description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapitre 2 Feature engineering | Arbres sur données pharmacologiques" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Résumé du travail octobre-novembre 2021" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapitre 2 Feature engineering | Arbres sur données pharmacologiques" />
+  
+  <meta name="twitter:description" content="Résumé du travail octobre-novembre 2021" />
+  
+
+<meta name="author" content="Valentin Constant" />
+
+
+<meta name="date" content="2021-11-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="modèle-à-13-variables.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Arbres sur données pharmacologiques</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 1 - Introduction au projet</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#mise-en-contexte"><i class="fa fa-check"></i><b>1.1</b> Mise en contexte</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#notre-cas-nos-données"><i class="fa fa-check"></i><b>1.2</b> Notre cas, nos données</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#etapes-dun-projet-de-data-science"><i class="fa fa-check"></i><b>1.3</b> Etapes d’un projet de data-science</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="feature-engineering.html"><a href="feature-engineering.html"><i class="fa fa-check"></i><b>2</b> Feature engineering</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="feature-engineering.html"><a href="feature-engineering.html#la-forêt-aléatoire"><i class="fa fa-check"></i><b>2.1</b> La forêt aléatoire</a></li>
+<li class="chapter" data-level="2.2" data-path="feature-engineering.html"><a href="feature-engineering.html#sélection-entrainement-et-tuning-du-modèle-permettant-le-feature-engineering"><i class="fa fa-check"></i><b>2.2</b> Sélection, entrainement et tuning du modèle permettant le Feature Engineering</a></li>
+<li class="chapter" data-level="2.3" data-path="feature-engineering.html"><a href="feature-engineering.html#importance-des-variables"><i class="fa fa-check"></i><b>2.3</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="feature-engineering.html"><a href="feature-engineering.html#pfi"><i class="fa fa-check"></i><b>2.3.1</b> PFI</a></li>
+<li class="chapter" data-level="2.3.2" data-path="feature-engineering.html"><a href="feature-engineering.html#gini"><i class="fa fa-check"></i><b>2.3.2</b> Gini</a></li>
+<li class="chapter" data-level="2.3.3" data-path="feature-engineering.html"><a href="feature-engineering.html#rfe"><i class="fa fa-check"></i><b>2.3.3</b> RFE</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="feature-engineering.html"><a href="feature-engineering.html#conclusion-de-la-partie-feature-engineering"><i class="fa fa-check"></i><b>2.4</b> Conclusion de la partie Feature Engineering</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html"><i class="fa fa-check"></i><b>3</b> Modèle à 13 variables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#vue-des-données"><i class="fa fa-check"></i><b>3.1</b> Vue des données</a></li>
+<li class="chapter" data-level="3.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#entrainement-test-et-tuning-du-modèle"><i class="fa fa-check"></i><b>3.2</b> Entrainement, test et tuning du modèle</a></li>
+<li class="chapter" data-level="3.3" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#matrice-de-confusion"><i class="fa fa-check"></i><b>3.3</b> Matrice de confusion</a></li>
+<li class="chapter" data-level="3.4" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#importance-des-variables-1"><i class="fa fa-check"></i><b>3.4</b> Importance des variables</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#méthode-de-permutation"><i class="fa fa-check"></i><b>3.4.1</b> Méthode de permutation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#lime"><i class="fa fa-check"></i><b>3.4.2</b> LIME</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#ale---effets-des-variables"><i class="fa fa-check"></i><b>3.5</b> ALE - effets des variables</a></li>
+<li class="chapter" data-level="3.6" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#un-arbre-au-lieu-dune-forêt"><i class="fa fa-check"></i><b>3.6</b> Un arbre au lieu d’une forêt ?</a></li>
+<li class="chapter" data-level="3.7" data-path="modèle-à-13-variables.html"><a href="modèle-à-13-variables.html#bilan"><i class="fa fa-check"></i><b>3.7</b> Bilan</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Arbres sur données pharmacologiques</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="feature-engineering" class="section level1" number="2">
+<h1><span class="header-section-number">Chapitre 2</span> Feature engineering</h1>
+<div id="la-forêt-aléatoire" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> La forêt aléatoire</h2>
+<p>Pour mesure l’importance des variables, nous allons directement utiliser un modèle bien connu : la forêt aléatoire (Breiman, 2001).</p>
+<p>Petit rappel de ce qu’est une forêt aléatoire (différents arbres de décision entrainés sur des échantillons bootstrappés)</p>
+<p><img src="images/rf.jpg" /><!-- --></p>
+<p>La database va être divisée en deux :</p>
+<p>Le premier set, appelé set d’entrainement, contiendra 75% des données.</p>
+<p>Le deuxième, appelé set de test, contiendra 25% des données.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="feature-engineering.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)<span class="co">#PSeudo aléatoire : fixer les seeds permet de reproduire le même hasard d&#39;une execution de code à une autre.</span></span>
+<span id="cb2-2"><a href="feature-engineering.html#cb2-2" aria-hidden="true" tabindex="-1"></a>smp_size <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fl">0.75</span> <span class="sc">*</span> <span class="fu">nrow</span>(df)) <span class="co">#Seuil de 75%</span></span>
+<span id="cb2-3"><a href="feature-engineering.html#cb2-3" aria-hidden="true" tabindex="-1"></a>train_ind <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(df)), <span class="at">size =</span> smp_size) <span class="co">#On mélange les lignes</span></span>
+<span id="cb2-4"><a href="feature-engineering.html#cb2-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="ot">&lt;-</span> df[train_ind, ] <span class="co">#75% vont au train set</span></span>
+<span id="cb2-5"><a href="feature-engineering.html#cb2-5" aria-hidden="true" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> df[<span class="sc">-</span>train_ind, ] <span class="co">#25% vont au test set</span></span></code></pre></div>
+</div>
+<div id="sélection-entrainement-et-tuning-du-modèle-permettant-le-feature-engineering" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Sélection, entrainement et tuning du modèle permettant le Feature Engineering</h2>
+<p>Pour réaliser ses 3 étapes d’un coup, nous allons utiliser un outil très utilisé :</p>
+<p>Les grilles de recherche. Elles contiennent différentes valeurs d’hyperparamètres.
+Chaque combinaison d’hyperparamètre sera testé et la combinaison permettant la meilleure précision sera retenue pour le modèle.</p>
+<p>Rappel sur les principaux hyperparamètres d’une forêt aléatoire :</p>
+<ul>
+<li><p><strong>mtry</strong> : combien de variables candidates à la scission d’un noeud ?</p></li>
+<li><p><strong>splitrule</strong> : quelle règle régit la scission d’un noeud ?</p></li>
+<li><p><strong>min.node.size</strong> : taille minimale que doit contenir un noeud.</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="feature-engineering.html#cb3-1" aria-hidden="true" tabindex="-1"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">mtry =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
+<span id="cb3-2"><a href="feature-engineering.html#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">splitrule =</span> <span class="fu">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),</span>
+<span id="cb3-3"><a href="feature-engineering.html#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">min.node.size =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb3-4"><a href="feature-engineering.html#cb3-4" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb3-5"><a href="feature-engineering.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="feature-engineering.html#cb3-6" aria-hidden="true" tabindex="-1"></a>group_fit_control <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="at">number =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>On entraine le modèle.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="feature-engineering.html#cb4-1" aria-hidden="true" tabindex="-1"></a>model_rf <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">train</span>(Proba <span class="sc">~</span> ., <span class="at">data =</span> train_df,<span class="at">method =</span> <span class="st">&quot;ranger&quot;</span>, <span class="co">#random forest</span></span>
+<span id="cb4-2"><a href="feature-engineering.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">trControl =</span> group_fit_control, <span class="at">tuneGrid =</span> rf_grid,  <span class="at">importance=</span><span class="st">&quot;impurity&quot;</span>)</span></code></pre></div>
+<p>Résulat de l’entrainement :</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="feature-engineering.html#cb5-1" aria-hidden="true" tabindex="-1"></a>model_rf<span class="sc">$</span>bestTune <span class="co">#Meilleur tuning</span></span></code></pre></div>
+<pre><code>##    mtry  splitrule min.node.size
+## 28    5 extratrees             1</code></pre>
+<p>Quelle est la précision de ce modèle sur un jeu de donnée inconnu ?</p>
+<p>On peut répondre à cette question grâce au jeu de test et à la matrice de confusion.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="feature-engineering.html#cb7-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> test_df[<span class="fu">which</span>(<span class="fu">names</span>(test_df) <span class="sc">!=</span> <span class="st">&quot;Proba&quot;</span>)]</span>
+<span id="cb7-2"><a href="feature-engineering.html#cb7-2" aria-hidden="true" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_rf, test)</span>
+<span id="cb7-3"><a href="feature-engineering.html#cb7-3" aria-hidden="true" tabindex="-1"></a>caret<span class="sc">::</span><span class="fu">confusionMatrix</span>(test_df<span class="sc">$</span>Proba, predicted)</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  1  0
+##          1 68  9
+##          0  6 67
+##                                           
+##                Accuracy : 0.9             
+##                  95% CI : (0.8404, 0.9429)
+##     No Information Rate : 0.5067          
+##     P-Value [Acc &gt; NIR] : &lt;2e-16          
+##                                           
+##                   Kappa : 0.8001          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.6056          
+##                                           
+##             Sensitivity : 0.9189          
+##             Specificity : 0.8816          
+##          Pos Pred Value : 0.8831          
+##          Neg Pred Value : 0.9178          
+##              Prevalence : 0.4933          
+##          Detection Rate : 0.4533          
+##    Detection Prevalence : 0.5133          
+##       Balanced Accuracy : 0.9002          
+##                                           
+##        &#39;Positive&#39; Class : 1               
+## </code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attachement du package : &#39;randomForest&#39;</code></pre>
+<pre><code>## L&#39;objet suivant est masqué depuis &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+</div>
+<div id="importance-des-variables" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Importance des variables</h2>
+<p>Le modèle développé, nous allons pouvoir mesurer l’importance des variables, avec la PFI (permutation feature importance) et l’indice de GINI, lié aux forêts aléatoire.</p>
+<div id="pfi" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> PFI</h3>
+<p>Petit rappel de ce qu’est la méthode de permutation (permutation aléatoire des valeurs des prédicteurs et mesure de l’impact sur la prédiction)</p>
+<p><img src="images/permu.png" /><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="feature-engineering.html#cb13-1" aria-hidden="true" tabindex="-1"></a>imp <span class="ot">&lt;-</span> FeatureImp<span class="sc">$</span><span class="fu">new</span>(predictor, <span class="at">loss =</span> <span class="st">&quot;ce&quot;</span>, <span class="at">compare =</span> <span class="st">&quot;difference&quot;</span>, <span class="at">n.repetitions =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="feature-engineering.html#cb14-1" aria-hidden="true" tabindex="-1"></a>nom_var_perm <span class="ot">&lt;-</span> imp<span class="sc">$</span>results[<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>,<span class="dv">1</span>]</span>
+<span id="cb14-2"><a href="feature-engineering.html#cb14-2" aria-hidden="true" tabindex="-1"></a>val_var_perm <span class="ot">&lt;-</span> imp<span class="sc">$</span>results[<span class="dv">1</span><span class="sc">:</span><span class="dv">21</span>,<span class="dv">3</span>]</span>
+<span id="cb14-3"><a href="feature-engineering.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="feature-engineering.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(val_var_perm, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">25</span>),</span>
+<span id="cb14-5"><a href="feature-engineering.html#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Permutation Feature Importance&quot;</span>,</span>
+<span id="cb14-6"><a href="feature-engineering.html#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Feature&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Importance&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/boxplot-pfi-original-rf-1.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="feature-engineering.html#cb15-1" aria-hidden="true" tabindex="-1"></a>legend <span class="ot">&lt;-</span> nom_var_perm</span>
+<span id="cb15-2"><a href="feature-engineering.html#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="feature-engineering.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb15-4"><a href="feature-engineering.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb15-5"><a href="feature-engineering.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,legend,legend, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">25</span>), <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb15-6"><a href="feature-engineering.html#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/boxplot-pfi-original-rf-2.png" width="672" /></p>
+</div>
+<div id="gini" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Gini</h3>
+<p>Les forêts aléatoires possèdent une méthode de mesure de l’importance de variable intrinsèque : elle se base sur le critère de Gini.</p>
+<p><img src="images/gini.png" /><!-- --></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="feature-engineering.html#cb16-1" aria-hidden="true" tabindex="-1"></a>importance_gini <span class="ot">&lt;-</span> <span class="fu">varImp</span>(model_rf)</span>
+<span id="cb16-2"><a href="feature-engineering.html#cb16-2" aria-hidden="true" tabindex="-1"></a>imp1 <span class="ot">&lt;-</span> importance_gini[[<span class="st">&#39;importance&#39;</span>]]</span>
+<span id="cb16-3"><a href="feature-engineering.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#importance_gini$Overall &lt;- importance_gini$Overall / sum(importance_gini$Overall) (en %)</span></span>
+<span id="cb16-4"><a href="feature-engineering.html#cb16-4" aria-hidden="true" tabindex="-1"></a>impgini <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">row.names</span>(imp1),imp1<span class="sc">$</span>Overall)</span>
+<span id="cb16-5"><a href="feature-engineering.html#cb16-5" aria-hidden="true" tabindex="-1"></a>impgini_sorted <span class="ot">&lt;-</span> impgini[<span class="fu">order</span>(<span class="sc">-</span>impgini<span class="sc">$</span>imp1.Overall),]</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="feature-engineering.html#cb17-1" aria-hidden="true" tabindex="-1"></a>nom_var_gini <span class="ot">&lt;-</span> impgini_sorted<span class="sc">$</span>row.names.imp1.[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb17-2"><a href="feature-engineering.html#cb17-2" aria-hidden="true" tabindex="-1"></a>val_var_gini <span class="ot">&lt;-</span> impgini_sorted<span class="sc">$</span>imp1.Overall[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb17-3"><a href="feature-engineering.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(val_var_gini, <span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">25</span>),</span>
+<span id="cb17-4"><a href="feature-engineering.html#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Mean decrease Gini importance&quot;</span>,</span>
+<span id="cb17-5"><a href="feature-engineering.html#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Feature&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Importance&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/boxplot-gini-original-rf-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="feature-engineering.html#cb18-1" aria-hidden="true" tabindex="-1"></a>legend <span class="ot">&lt;-</span> nom_var_gini</span>
+<span id="cb18-2"><a href="feature-engineering.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb18-3"><a href="feature-engineering.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb18-4"><a href="feature-engineering.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,legend,legend, <span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">25</span>),</span>
+<span id="cb18-5"><a href="feature-engineering.html#cb18-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/boxplot-gini-original-rf-2.png" width="672" /></p>
+</div>
+<div id="rfe" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> RFE</h3>
+<p>La RFE pousse le Feature Engineering un peu plus loin, au-delà d’une simple mesure d’importance, il va aussi sélectionner un nombre de variable optimisé pour obtenir la précision la plus élevé possible.</p>
+<p>La RFE doit être tunnée :</p>
+<ul>
+<li><p><strong>functions</strong> : quels modèles utiliser ?</p></li>
+<li><p><strong>methods</strong> : quelle type de validation croisée?</p></li>
+<li><p><strong>number</strong> : combien de folds lors de la validation croisée</p></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="feature-engineering.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ensure the results are repeatable</span></span>
+<span id="cb19-2"><a href="feature-engineering.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
+<span id="cb19-3"><a href="feature-engineering.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load the library</span></span>
+<span id="cb19-4"><a href="feature-engineering.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mlbench)</span>
+<span id="cb19-5"><a href="feature-engineering.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="feature-engineering.html#cb20-1" aria-hidden="true" tabindex="-1"></a>control_1 <span class="ot">&lt;-</span> <span class="fu">rfeControl</span>(<span class="at">functions=</span>rfFuncs, <span class="at">method=</span><span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
+<span id="cb20-2"><a href="feature-engineering.html#cb20-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">rfe</span>(df[,<span class="dv">1</span><span class="sc">:</span><span class="dv">94</span>],df<span class="sc">$</span>Proba, <span class="at">sizes=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">94</span>), <span class="at">rfeControl=</span>control_1)</span></code></pre></div>
+<p>Résultats : nombre de variables retenu, nom de ces variables.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="feature-engineering.html#cb21-1" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>optsize</span>
+<span id="cb21-2"><a href="feature-engineering.html#cb21-2" aria-hidden="true" tabindex="-1"></a>results<span class="sc">$</span>optVariables</span></code></pre></div>
+<p>Graphique représentant l’évolution de la précision du modèle selon le nombre de variable retenu. Le pic se trouve là où la précision est la plus élevée.
+Affichage des nom des variables retenues.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="feature-engineering.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(results, <span class="at">type=</span><span class="fu">c</span>(<span class="st">&quot;g&quot;</span>, <span class="st">&quot;o&quot;</span>))</span>
+<span id="cb22-2"><a href="feature-engineering.html#cb22-2" aria-hidden="true" tabindex="-1"></a>nom_var_rfe <span class="ot">&lt;-</span> <span class="fu">predictors</span>(results)[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>]</span>
+<span id="cb22-3"><a href="feature-engineering.html#cb22-3" aria-hidden="true" tabindex="-1"></a>legend <span class="ot">&lt;-</span> nom_var_rfe</span>
+<span id="cb22-4"><a href="feature-engineering.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb22-5"><a href="feature-engineering.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb22-6"><a href="feature-engineering.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>,legend,legend, <span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col=</span><span class="fu">rainbow</span>(<span class="dv">25</span>),</span>
+<span id="cb22-7"><a href="feature-engineering.html#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="conclusion-de-la-partie-feature-engineering" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Conclusion de la partie Feature Engineering</h2>
+<p>Nous avons décidés de retenir les variables sélectionnées par la RFE.</p>
+<p>La PFI et Gini ont permis de confirmer les prédicteurs les plus importants.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="modèle-à-13-variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-feature-engineering.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
